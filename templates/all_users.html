@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FitBuddy | Users</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+<main class="container wide">
+  <div class="topbar"><a href="/" class="link">← Home</a></div>
+  <section class="card">
+    <h1>All Users</h1>
+    <p class="muted">{{ users|length }} record(s)</p>
+    {% if not users %}
+      <p>No users have been registered yet.</p>
+    {% endif %}
+    {% for user in users %}
+    <article class="user-record">
+      <h2>{{ user.username }} <small>({{ user.user_id }})</small></h2>
+      <div class="profile compact">
+        <div><span>Age</span><strong>{{ user.age }}</strong></div>
+        <div><span>Weight</span><strong>{{ user.weight }} kg</strong></div>
+        <div><span>Goal</span><strong>{{ user.goal }}</strong></div>
+        <div><span>Intensity</span><strong>{{ user.intensity }}</strong></div>
+      </div>
+      <details><summary>Original plan</summary><pre class="plan">{{ user.original_plan }}</pre></details>
+      {% if user.updated_plan %}
+      <details open><summary>Updated plan</summary><pre class="plan">{{ user.updated_plan }}</pre></details>
+      {% endif %}
+      {% if user.feedback %}<p><strong>Feedback:</strong> {{ user.feedback }}</p>{% endif %}
+      <p><strong>Nutrition tip:</strong> {{ user.nutrition_tip }}</p>
+    </article>
+    {% endfor %}
+  </section>
+</main>
+</body>
+</html>
